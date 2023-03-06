@@ -1,0 +1,28 @@
+
+
+body {
+    height: 100%;
+    width: 100%;
+    font-family: 'Verdana';   
+    text-align: center;
+}
+
+.boto {
+    display: block;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 10px;
+    width: 100px;
+    height: 10px;
+    background-color: #d6a3eb;
+    color: white;
+    padding: 27px 150px 37px 150px;
+    text-decoration: none;
+    border-style: inset;
+    font-size: 20px;
+}
+
+.boto:hover {
+    background-color: #6d7be6;
+    border-style: outset;
+}

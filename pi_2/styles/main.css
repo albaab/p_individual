@@ -11,21 +11,32 @@
 	height: 75px;
 	font-size: 16px;
 	margin-top: 10px;
+	font-family: 'Verdana';
+	text-decoration: none;
 }
 
 p{
 	text-align: center;
+	font-family: 'Verdana';
 }
 
-button.menu-object:active{
-	font-size: 18px;
+button.menu-object{
+	font-size: 20px;
 	width: 275px;
 	height: 70px;
+	border-style: inset;
+	background-color: #d6a3eb;
+    color: white;
+	font-family: 'Verdana';  
+
 }
 
-button.menu-object:hover:not(:active){
-	font-size: 22px;
-	width: 325px;
-	height: 85px;
+button.menu-object:hover(){
+	font-size: 20px;
+	width: 275px;
+	height: 70px;
+	border-style: outset;
+	background-color: #6d7be6;
+	font-family: 'Verdana';
 }
 
