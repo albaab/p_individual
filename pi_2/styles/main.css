@@ -1,3 +1,8 @@
+body{
+	background-color: rgb(213, 241, 248);
+	font-family: Verdana;
+}
+
 #title{
 	font-size: 1.63em;
 	line-height: 4.69em;
@@ -54,7 +59,6 @@ button.menu-object{
 	background-color: #d6a3eb;
     color: white;
 	font-family:Verdana;  
-
 }
 
 button.menu-object:hover(){
