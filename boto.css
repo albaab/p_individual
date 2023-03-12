@@ -11,15 +11,15 @@ body {
     display: block;
     margin-left: auto;
     margin-right: auto;
-    margin-top: 10px;
-    width: 100px;
-    height: 10px;
+    margin-top: 0.63em;
+    width: 6.25em;
+    height: 0.63em;
     background-color: #d6a3eb;
     color: white;
-    padding: 27px 150px 37px 150px;
+    padding: 1.69em 9.38em 2.31em 9.38em;
     text-decoration: none;
     border-style: inset;
-    font-size: 20px;
+    font-size: 1.25em;
 }
 
 .boto:hover {
