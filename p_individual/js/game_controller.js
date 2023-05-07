@@ -1,85 +1,110 @@
-const back = "../resources/back.png";
-const items = ["../resources/cb.png","../resources/co.png","../resources/sb.png",
-"../resources/so.png","../resources/tb.png","../resources/to.png"];
-
 var json = localStorage.getItem("config") || '{"cards":2,"dificulty":"hard"}';
-var partida_comencat = false;
 var temps = 0;
-var game = new Vue({
-	el: "#game_id",
-	data: {
-		username:'',
-		current_card: [],
-		items: [],
-		num_cards: 2,
-		bad_clicks: 0
-	},
-	created: function(){
-		this.num_cards = JSON.parse(json).cards;
-		this.dificulty = JSON.parse(json).dificulty;
-		this.username = sessionStorage.getItem("username","unknown");
-		this.items = items.slice(); // Copiem l'array
-		this.items.sort(function(){return Math.random() - 0.5}); // Array aleatòria
-		this.items = this.items.slice(0, this.num_cards); // Agafem els primers numCards elements
-		this.items = this.items.concat(this.items); // Dupliquem els elements
-		this.items.sort(function(){return Math.random() - 0.5}); // Array aleatòria
-		for (var i = 0; i < this.items.length; i++){
-			this.current_card.push({done: false, texture: this.items[i]});
-		}
-		if (this.dificulty === "normal" ) temps = 500;
-		else if (this.dificulty === "easy" ) temps = 1000;
-		else if (this.dificulty === "hard" ) temps = 250;
 
-		setTimeout(() => {
-			for(var i = 0; i < this.items.length; i++){
-				Vue.set(this.current_card, i, {done: false, texture: back});
+class GameScene extends Phaser.Scene {
+    constructor (){
+        super('GameScene');
+        this.username = sessionStorage.getItem("username","unknown");
+        this.cards = null;
+        this.numCards = JSON.parse(json).cards;
+        this.dificulty = JSON.parse(json).dificulty;
+        this.firstClick = null;
+        this.score = 100;
+        this.correct = 0;
+    }
+
+    preload (){	
+		this.load.image('back', '../resources/back.png');
+		this.load.image('cb', '../resources/cb.png');
+		this.load.image('co', '../resources/co.png');
+		this.load.image('sb', '../resources/sb.png');
+		this.load.image('so', '../resources/so.png');
+		this.load.image('tb', '../resources/tb.png');
+		this.load.image('to', '../resources/to.png');
+	}
+	
+    create (){
+		if (this.dificulty === "normal" ) temps = 1000;
+        else if (this.dificulty === "easy" ) temps = 2000;
+        else if (this.dificulty === "hard" ) temps = 500;
+
+
+		let arraycards = ['cb', 'co', 'sb', 'so', 'tb', 'to'];
+		this.cameras.main.setBackgroundColor(0xBFFCFF);
+		Phaser.Utils.Array.Shuffle(arraycards);
+        arraycards = arraycards.slice(0, this.numCards);
+        arraycards = arraycards.concat(arraycards);
+        Phaser.Utils.Array.Shuffle(arraycards);
+		var pos_x = 250;
+		var pos_y = 300;
+		for (let i = 0; i < arraycards.length; i++) {
+			this.add.image(pos_x,pos_y,arraycards[i]);
+			if(i===3 || i===7){
+				pos_x = 250;
+				pos_y += 200;
 			}
-			partida_comencat = true;
-		}, temps);
-	},
-	methods: {
-		clickCard: function(i){
-			if (!this.current_card[i].done && this.current_card[i].texture === back)
-				Vue.set(this.current_card, i, {done: false, texture: this.items[i]});
+			else if(i>3){
+				pos_x+=100;
+				pos_y=500;
+			}
+			else if(i<3){
+				pos_x+=100;
+			}
 		}
-	},
-
-	watch: {
-		current_card: function(value){
+		
+		this.cards = this.physics.add.staticGroup();
+		setTimeout(() => {
+			pos_x = 250;
+			pos_y = 300;
+			for (let i = 0; i < arraycards.length; i++) {
+				this.cards.create(pos_x,pos_y,'back');
+				if(i===3 || i===7){
+					pos_x = 250;
+					pos_y += 200;
+				}
+				else if(i>3){
+					pos_x+=100;
+					pos_y=500;
+				}
+				else if(i<3){
+					pos_x+=100;
+				}
+			}
 			
-			if (value.texture === back || !partida_comencat) return;
-			var front = null;
-			var i_front = -1;
-			for (var i = 0; i < this.current_card.length; i++){
-				if (!this.current_card[i].done && this.current_card[i].texture !== back){
-					if (front){
-						if (front.texture === this.current_card[i].texture){
-							front.done = this.current_card[i].done = true;
-							this.num_cards--;
+			let i = 0;
+			this.cards.children.iterate((card)=>{
+				card.card_id = arraycards[i];
+				i++;
+				card.setInteractive();
+				card.on('pointerup', () => {
+					card.disableBody(true,true);
+					if (this.firstClick){
+						if (this.firstClick.card_id !== card.card_id){
+							this.score -= 20;
+							this.firstClick.enableBody(false, 0, 0, true, true);
+							setTimeout(() => {
+								card.enableBody(false, 0, 0, true, true);
+							}, temps-100);
+							if (this.score <= 0){
+								alert("Game Over");
+								loadpage("../");
+							}
 						}
 						else{
-							Vue.set(this.current_card, i, {done: false, texture: back});
-							Vue.set(this.current_card, i_front, {done: false, texture: back});
-							this.bad_clicks++;
-							break;
+							this.correct++;
+							if (this.correct >= this.numCards){
+								alert("You Win with " + this.score + " points.");
+								loadpage("../");
+							}
 						}
+						this.firstClick = null;
 					}
 					else{
-						front = this.current_card[i];
-						i_front = i;
+						this.firstClick = card;
 					}
-				}
-			}			
-		}
-	},
-	computed: {
-		score_text: function(){
-			return 100 - this.bad_clicks * 20;
-		}
+				}, card);
+			});
+		}, temps);
 	}
-});
-
-
-
-
-
+	update (){	}
+}
