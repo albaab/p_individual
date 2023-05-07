@@ -1,3 +1,11 @@
+input[type=number]{
+    height: 3rem;
+    font-size: 1.3rem;
+    font-weight: bold;
+    width: 3rem;
+    text-align: center;
+}
+
 body{
 	background-color: rgb(213, 241, 248);
 	font-family: Verdana;
@@ -33,17 +41,13 @@ body{
 }
 
 .menu-object{
-	display: grid;
-	margin-left: auto;
-	margin-right: auto;
-	width: 18.75em;
-	height: 4.68em;
-	font-size: 1em;
-	margin-top: 0.62em;
-	font-family: Verdana;
-	text-decoration: none;
-	align-content: center;
-    justify-content: center;
+    display:block;
+    margin-left: auto;
+    margin-right: auto;
+    width: 300px;
+    height: 75px;
+    font-size: 16px;
+    margin-top: 10px;
 }
 
 p{
