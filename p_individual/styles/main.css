@@ -1,39 +1,79 @@
-input[type=number]{
-	height: 3rem;
-    font-size: 1.3rem;
-    font-weight: bold;
-    width: 3rem;
-    text-align: center;
+body{
+	background-color: rgb(213, 241, 248);
+	font-family: Verdana;
 }
 
 #title{
-	font-size: 26px;
-	line-height: 75px;
+	font-size: 1.63em;
+	line-height: 4.69em;
+	font-family: Verdana; 
+}
+
+.boto2{
+	display: grid;
+    margin-left: auto;
+    margin-right: auto;
+    margin-top: 2.5em;
+    width: 5.25em;
+    height: 0.63em;
+    background-color: #d6a3eb;
+    color: white;
+    padding: 1em 3em 1em 3em;
+    text-decoration: none;
+    border-style: inset;
+    font-size: 1em;
+	font-family: Verdana;
+	justify-content: center;
+    align-content: center;
+}
+
+.boto2:hover {
+    background-color: #6d7be6;
+    border-style: outset;
 }
 
 .menu-object{
-	display:block;
+	display: grid;
 	margin-left: auto;
 	margin-right: auto;
-	width: 300px;
-	height: 75px;
-	font-size: 16px;
-	margin-top: 10px;
+	width: 18.75em;
+	height: 4.68em;
+	font-size: 1em;
+	margin-top: 0.62em;
+	font-family: Verdana;
+	text-decoration: none;
+	align-content: center;
+    justify-content: center;
 }
 
 p{
 	text-align: center;
+	font-family: Verdana;
 }
 
-button.menu-object:active{
-	font-size: 18px;
-	width: 275px;
-	height: 70px;
+button.menu-object{
+	font-size: 1.25em;
+	width: 17.19em;
+	height: 4.37em;
+	border-style: inset;
+	background-color: #d6a3eb;
+    color: white;
+	font-family:Verdana;  
 }
 
-button.menu-object:hover:not(:active){
-	font-size: 22px;
-	width: 325px;
-	height: 85px;
+button.menu-object:hover(){
+	font-size: 1.25em;
+	width: 17.19em;
+	height: 4.37em;
+	border-style: outset;
+	background-color: #6d7be6;
+	font-family:Verdana;
+}
+
+.cartes{
+	display: grid;
+	grid-template-columns: 10em 10em 10em 10em;
+	justify-items: center;
+    justify-content: center;
 }
 
